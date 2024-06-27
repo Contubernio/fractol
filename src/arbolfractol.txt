@@ -1,0 +1,106 @@
+
+main()
+│   - Función principal del programa. Inicializa y valida argumentos, configura el entorno gráfico.
+│   Archivo: main.c
+├── handle_info(argc, argv)
+│   │   - Verifica si 'info' es pasado como argumento y muestra la información del programa.
+│   │   Archivo: main.c
+│   └── display_info()
+│       - Muestra la información de controles del programa.
+│       Archivo: utils2.c
+├── validate_args(argc, argv, &data, &julia_param)
+│   │   - Realiza la validación inicial y final de los argumentos del programa.
+│   │   Archivo: validation2.c
+│   ├── initial_validation(argc, argv, data)
+│   │   │   - Realiza la primera fase de validación de argumentos.
+│   │   │   Archivo: validation.c
+│   │   ├── check_fractal_type(argc, argv, data)
+│   │   │   │   - Determina el tipo de fractal y valida los argumentos específicos.
+│   │   │   │   Archivo: validation.c
+│   │   │   ├── check_mandelbrot(argc)
+│   │   │   │   │   - Verifica que Mandelbrot tiene solo un argumento.
+│   │   │   │   │   Archivo: validation.c
+│   │   │   ├── check_julia(argc, argv)
+│   │   │   │   │   - Verifica que Julia tiene un argumento adicional y que es válido.
+│   │   │   │   │   Archivo: validation.c
+│   │   │   └── check_tricorn(argc)
+│   │   │       │   - Verifica que Tricorn tiene solo un argumento.
+│   │   │       │   Archivo: validation.c
+│   │   └── display_usage()
+│   │       - Muestra el uso correcto del programa.
+│   │       Archivo: utils2.c
+│   ├── final_validation(argc, argv, data, julia_param)
+│   │   │   - Realiza la segunda fase de validación de argumentos.
+│   │   │   Archivo: validation2.c
+│   │   └── validate_params_2(argc, data)
+│   │       - Validación de parámetros no detallada.
+│   │       Archivo: validation.c
+│   └── validate_params(data)
+│       - Valida que los parámetros de Julia están dentro del rango permitido.
+│       Archivo: validation.c
+├── setup_and_run(&data, argc, julia_param)
+│   │   - Configura y ejecuta el programa después de la validación de argumentos.
+│   │   Archivo: main.c
+│   ├── init_data(data)
+│   │   │   - Inicializa los datos y crea la conexión con MiniLibX y la ventana de la aplicación.
+│   │   │   Archivo: init.c
+│   ├── set_julia_params(data, julia_param)
+│   │   │   - Configura los parámetros específicos para Julia.
+│   │   │   Archivo: init.c
+│   │   ├── validate_julia_param(param)
+│   │   │   │   - Valida que el parámetro para Julia está en el rango correcto.
+│   │   │   │   Archivo: init.c
+│   │   ├── assign_julia_values(data, param)
+│   │   │   │   - Asigna los valores reales e imaginarios para Julia según el parámetro.
+│   │   │   │   Archivo: init.c
+│   │   └── adjust_julia_view(data)
+│   │       - Ajusta la vista de Julia (zoom y posición).
+│   │       Archivo: init.c
+│   ├── select_fractal(data)
+│   │   │   - Selecciona y dibuja el fractal según el tipo especificado.
+│   │   │   Archivo: init2.c
+│   │   ├── draw_mandelbrot(data)
+│   │   │   │   - Dibuja el fractal Mandelbrot.
+│   │   │   │   Archivo: mandelbrot.c
+│   │   │   ├── draw_julia(data)
+│   │   │   │   - Dibuja el fractal Julia.
+│   │   │   │   Archivo: julia.c
+│   │   │   └── draw_tricorn(data)
+│   │       - Dibuja el fractal Tricorn.
+│   │       Archivo: tricorn.c
+│   ├── mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr, 0, 0)
+│   │   - Coloca la imagen renderizada en la ventana.
+│   │   Archivo: main.c
+│   ├── hooks(data)
+│   │   │   - Configura los hooks para manejar eventos de teclado y ratón.
+│   │   │   Archivo: hooks.c
+│   │   ├── mlx_key_hook(data->win_ptr, key_press, data)
+│   │   │   │   - Configura el hook para eventos de teclado.
+│   │   │   │   Archivo: hooks.c
+│   │   ├── mlx_mouse_hook(data->win_ptr, mouse_scroll, data)
+│   │   │   │   - Configura el hook para eventos de scroll del ratón.
+│   │   │   │   Archivo: hooks2.c
+│   │   ├── key_press(keycode, data)
+│   │   │   │   - Maneja los eventos de teclado.
+│   │   │   │   Archivo: hooks2.c
+│   │   │   ├── move_handle(keycode, data)
+│   │   │   │   │   - Maneja los movimientos con las teclas de dirección.
+│   │   │   │   │   Archivo: hooks.c
+│   │   │   ├── color_scheme(keycode, data)
+│   │   │   │   │   - Cambia el esquema de color con las teclas del teclado numérico.
+│   │   │   │   │   Archivo: hooks.c
+│   │   └── mouse_scroll(button, x, y, data)
+│   │       │   - Maneja los eventos de scroll del ratón para realizar zoom.
+│   │       │   Archivo: hooks2.c
+│   │       ├── calc_mouse(&params, &old_mouse_x, &old_mouse_y)
+│   │       │   │   - Calcula las coordenadas del ratón antes de realizar zoom.
+│   │       │   │   Archivo: hooks2.c
+│   │       ├── zoom_handle(button, data, &params)
+│   │       │   │   - Ajusta el nivel de zoom basado en el botón del ratón presionado.
+│   │       │   │   Archivo: hooks.c
+│   │       └── calc_mouse(&params, &new_mouse_x, &new_mouse_y)
+│   │           - Calcula las coordenadas del ratón después de realizar zoom.
+│   │           Archivo: hooks2.c
+│   └── mlx_loop(data->mlx_ptr)
+│       - Entra en el bucle principal de eventos gráficos de MiniLibX.
+│       Archivo: main.c
